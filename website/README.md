@@ -14,18 +14,32 @@ python3 -m http.server 8000 --directory docs
 
 Open `http://localhost:8000`.
 
+## Publishing boundary
+
+Keep only public site content in `docs/`: `index.html`, `.nojekyll`, and `assets/`.
+The manuscript source lives in the repository-root `paper/` folder, and the
+website generator and maintenance notes live in `website/`. Neither folder is
+part of the `/docs` publishing source. The downloadable PDF and displayed
+figures remain intentionally public in `docs/assets/`.
+
+GitHub Pages settings remain `codex/project-page` and `/docs`. Moving files outside
+that folder removes them from subsequent site deployments; earlier downloaded
+copies cannot be withdrawn. Repository visibility is configured independently.
+
 ## Updating the page
 
-- `build_page.py` contains the page template and copy. Run `python3 docs/build_page.py`
-  to regenerate `index.html` from the template, the active abstract in
+Paths below are relative to the repository root.
+
+- `website/build_page.py` contains the page template and copy. Run `python3 website/build_page.py`
+  to regenerate `docs/index.html` from the template, the active abstract in
   `paper/main.tex`, and `paper/tables/table1_main_qa/table1_main_combined.tex`.
-- `assets/site.css` controls typography, colors, and responsive layout.
-- `assets/site.js` handles figure enlargement, citation copying, and navigation.
-- Replace `assets/paper/circleclar.pdf` when the manuscript changes. The current
+- `docs/assets/site.css` controls typography, colors, and responsive layout.
+- `docs/assets/site.js` handles figure enlargement, citation copying, and navigation.
+- Replace `docs/assets/paper/circleclar.pdf` when the manuscript changes. The current
   27-page PDF was compiled from `paper/neurips_2026.tex`. In a temporary build copy,
   pass the `table` option to `xcolor` before loading the conference style to avoid
   the source wrapper's package-option clash.
-- Re-export the PNG/PDF files in `assets/images/` when paper figures change. The
+- Re-export the PNG/PDF files in `docs/assets/images/` when paper figures change. The
   overview uses `paper/figures/Figure1_fixed.pdf`; result figures use
   `heapmaptable.pgf` and `policy.pgf`. The web heatmap trims blank margins and uses
   a 7.6pt font for model labels to avoid overlap; its values and colors are unchanged.
@@ -38,5 +52,5 @@ Commit and push changes to `codex/project-page` to update the live page.
 
 The manuscript and research figures are the supplied CircleClar material.
 The locally hosted Inter font uses the SIL Open Font License in
-`assets/fonts/LICENSE.txt`. Feather icons use the MIT license in
-`assets/icons/LICENSE.txt`. The page loads no third-party runtime scripts or fonts.
+`docs/assets/fonts/LICENSE.txt`. Feather icons use the MIT license in
+`docs/assets/icons/LICENSE.txt`. The page loads no third-party runtime scripts or fonts.

@@ -4,8 +4,8 @@ import json
 import re
 import struct
 
-SITE = Path(__file__).resolve().parent
-PAPER = SITE / 'paper'
+SITE = Path(__file__).resolve().parents[1] / 'docs'
+PAPER = SITE.parent / 'paper'
 
 def icon(name):
     source = (SITE / 'assets/icons' / f'{name}.svg').read_text().strip()
