@@ -1,0 +1,170 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2026
+
+% The authors should use one of these tracks.
+% Before accepting by the NeurIPS conference, select one of the options below.
+% 0. "default" for submission
+%\usepackage{neurips_2026}
+% the "default" option is equal to the "main" option, which is used for the Main Track with double-blind reviewing.
+% 1. "main" option is used for the Main Track
+%  \usepackage[main]{neurips_2026}
+% 2. "position" option is used for the Position Paper Track
+%  \usepackage[position]{neurips_2026}
+% 3. "eandd" option is used for the Evaluations & Datasets Track
+ % \usepackage[eandd]{neurips_2026}
+% 4. "creativeai" option is used for the Creative AI Track
+%  \usepackage[creativeai]{neurips_2026}
+% 5. "sglblindworkshop" option is used for the Workshop with single-blind reviewing
+ % \usepackage[sglblindworkshop]{neurips_2026}
+% 6. "dblblindworkshop" option is used for the Workshop with double-blind reviewing
+
+
+     \PassOptionsToPackage{numbers, compress}{natbib}
+
+\usepackage[dblblindworkshop, final]{neurips_2026}
+% 7. "education" option is used for the Education Track
+%  \usepackage[education]{neurips_2026}
+
+
+% After being accepted, the authors should add "final" behind the track to compile a camera-ready version.
+% 1. Main Track
+ % \usepackage[main, final]{neurips_2026}
+% 2. Position Paper Track
+%  \usepackage[position, final]{neurips_2026}
+% 3. Evaluations & Datasets Track
+ % \usepackage[eandd, final]{neurips_2026}
+% 4. Creative AI Track
+%  \usepackage[creativeai, final]{neurips_2026}
+% 5. Workshop with single-blind reviewing
+%  \usepackage[sglblindworkshop, final]{neurips_2026}
+% 6. Workshop with double-blind reviewing
+%  \usepackage[dblblindworkshop, final]{neurips_2026}
+% Note. For the workshop paper template, both \title{} and \workshoptitle{} are required, with the former indicating the paper title shown in the title and the latter indicating the workshop title displayed in the footnote.
+% For workshops (5., 6.), the authors should add the name of the workshop, "\workshoptitle" command is used to set the workshop title.
+% \workshoptitle{WORKSHOP TITLE}
+% 7. Education Track
+% \usepackage[education, final]{neurips_2026}
+
+% "preprint" option is used for arXiv or other preprint submissions
+ % \usepackage[preprint]{neurips_2026}
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2026}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{comment}
+\usepackage{float}
+\usepackage{multirow}
+%===========
+%\usepackage{lmodern}
+\usepackage{microtype}
+
+%\usepackage[margin=1in]{geometry}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{amsthm}
+\usepackage{bbm} % Provides \mathbbm{1}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage{subcaption}
+\captionsetup[subfigure]{
+    font=small,
+    labelfont=bf,
+    skip=2pt
+}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{cleveref}
+\usepackage{bbm} % Provides \mathbbm{1}
+\usepackage{pgfplots} % For \mathdefault in PGF figures
+%\usepackage[hidelinks]{hyperref}
+\usepackage{todonotes}
+\usepackage{comment}
+\input{packages}
+\usepackage{thmtools,thm-restate}
+\usepackage{svg}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\definecolor{colfirst}{RGB}{0,114,178}
+\definecolor{colsecond}{RGB}{213,94,0}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
+
+\definecolor{seabornGreen}{HTML}{029E72}
+\definecolor{colfirst}{HTML}{029e72}
+\definecolor{colsecond}{HTML}{de8f03}
+\providecommand{\mathdefault}[1]{#1}
+\newtcolorbox{desideratum}[1]{
+    colback=seabornGreen!8,
+    colframe=seabornGreen,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=6pt,
+    right=6pt,
+    top=5pt,
+    bottom=5pt,
+    title=\textbf{#1},
+    fonttitle=\normalsize,
+    coltitle=white
+}
+
+\workshoptitle{Linguistic Principles for Foundation Models (LP4FM)}
+
+% Note. For the workshop paper template, both \title{} and \workshoptitle{} are required, with the former indicating the paper title shown in the title and the latter indicating the workshop title displayed in the footnote. 
+%\title{Formatting Instructions For NeurIPS 2026}
+\title{
+    What Is a Clarification? Estimating Model-Dependent Input Ambiguity
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+  \textbf{Jingqin Tang \quad Tim Tomov \quad Sebastian Schmidt} \\
+  \textbf{Dominik Fuchsgruber \quad Stephan G{\"u}nnemann} \\
+  TUM School of Computation, Information and Technology \\
+  Technical University of Munich, Germany \\
+  \texttt{\{go39gov,tim.tomov,sebastian95.schmidt,d.fuchsgruber,s.guennemann\}@tum.de}
+}
+
+
+\begin{document}
+
+\maketitle
+
+\input{main}
+
+
+
+
+
+
+
+\newpage
+%Ho\input{checklist.tex}
+
+
+\end{document}

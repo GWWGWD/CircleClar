@@ -1,0 +1,118 @@
+\newcommand{\ann}[2]{%
+    \textbf{#1}\,$\rightarrow$\,#2%
+}
+
+\begin{table}[t]
+    \centering
+    \caption{Examples of rewrite and answer curation in AmbigQA-HQ.}
+    \label{tab:ambigqa-hq-repaired-examples}
+    \vspace{3pt}
+    \small
+    \renewcommand{\arraystretch}{1.05}
+    \setlength{\tabcolsep}{0pt}
+
+    \begin{tabularx}{\linewidth}{
+        @{}
+        >{\RaggedRight\arraybackslash}X
+        @{\hspace{1.8em}}
+        >{\RaggedRight\arraybackslash}X
+        @{}
+    }
+        \toprule
+        \textbf{Original AmbigQA}
+        &
+        \textbf{Curated AmbigQA-HQ}
+        \\
+        \midrule
+
+        % D1
+        \multicolumn{2}{@{}l@{}}{
+            \textbf{D1 (Uniqueness): Split a multi-answer rewrite}
+        }
+        \\[-1pt]
+        \multicolumn{2}{@{}p{\linewidth}@{}}{
+            \emph{Question: ``Who is the girl in ZZ Top's `Legs' video?''}
+        }
+        \\[3pt]
+
+        \ann{Salesgirl}{Wendy Frazier}
+        \par
+        \ann{Eliminator girls}{
+            \{Dani\`ele Arnaud, Jeana Tomasino, Kymberly Herrin\}
+        }
+        &
+        \ann{Shoe-store clerk}{Wendy Frazier}
+        \par
+        \ann{Dark-haired girl}{Jeana Tomasino}
+        \par
+        \ann{Girl wearing black}{Dani\`ele Arnaud}
+        \par
+        \ann{Girl wearing red}{Kymberly Herrin}
+        \tabularnewline
+
+        \midrule
+
+        % D2
+        \multicolumn{2}{@{}l@{}}{
+            \textbf{D2 (Faithfulness): Remove an unsupported rewrite}
+        }
+        \\[-1pt]
+        \multicolumn{2}{@{}p{\linewidth}@{}}{
+            \emph{Question: ``When did `The Haves and the Have Nots' start?''}
+        }
+        \\[3pt]
+
+        \ann{TV series}{May 28, 2013}
+        \par
+        \ann{Stage play}{2011}
+        \par
+        \ann{Episodes 105--107}{three dates in 2017}
+        &
+        \ann{TV series}{May 28, 2013}
+        \par
+        \ann{Stage play}{2011}
+        \tabularnewline
+
+        \midrule
+
+        % D3
+        \multicolumn{2}{@{}l@{}}{
+            \textbf{D3 (Answer equivalence): Merge duplicate rewrites}
+        }
+        \\[-1pt]
+        \multicolumn{2}{@{}p{\linewidth}@{}}{
+            \emph{Question: ``Who made the song `Total Eclipse of the Heart'?''}
+        }
+        \\[3pt]
+
+        \ann{Wrote/produced}{Jim Steinman (four rewrites)}
+        \par
+        \ann{Originally recorded}{Bonnie Tyler (two rewrites)}
+        &
+        \ann{Wrote and produced}{Jim Steinman}
+        \par
+        \ann{Originally recorded}{Bonnie Tyler}
+        \tabularnewline
+
+        \midrule
+
+        % Factual correction
+        \multicolumn{2}{@{}l@{}}{
+            \textbf{Factual correction}
+        }
+        \\[-1pt]
+        \multicolumn{2}{@{}p{\linewidth}@{}}{
+            \emph{Question: ``When was the first `Texas Chainsaw Massacre'
+            movie made?''}
+        }
+        \\[3pt]
+
+        \ann{Filmed}{July 1974}
+        &
+        \ann{Filmed}{July--August 1973}
+        \\
+
+        \bottomrule
+    \end{tabularx}
+
+\end{table}
