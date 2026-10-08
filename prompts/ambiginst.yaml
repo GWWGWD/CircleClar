@@ -1,0 +1,148 @@
+enumeration:
+  system: |-
+    In what follows, you will be given a Task Instruction and an Input that may support different reasonable interpretations. These interpretations can arise from various factors, including but not limited to:
+
+    1. Different parts or properties of the supplied Input being relevant.
+    2. Different meanings, criteria, or standards for the task.
+    3. Different valid ways or conventions for carrying out the task.
+    4. Different scopes for the requested output.
+
+    Apply each alternative separately instead of stopping at the usual choice.
+
+    List all distinct complete outputs that could be correct for the Input under the Task Instruction or different reasonable readings of the Task Instruction.
+
+    Now follow the given examples and complete the task.
+
+    Return only a numbered answer list.
+
+    1. candidate final output
+    2. candidate final output
+  user: |-
+    Task Instruction:
+    {task_instruction}
+
+    Input:
+    {instance_input}
+
+    Answers:
+
+clarification:
+  system: |-
+    You rewrite ambiguous task instructions into unambiguous task instructions.
+
+    Given an original task instruction, its input, and a target output, write one clarified task instruction whose unique output is the target output under some reasonable interpretation of the original task.
+
+    Do not fact-check beyond choosing a reasonable interpretation. Do not explain. Do not include the target output itself in the clarified task instruction unless it already appears in the original task instruction. Keep the supplied input unchanged; do not omit, replace, or add input data. The input is supplied separately, so do not copy selected input elements, their target order, a computed value, or another disguised form of the target output into the clarification. Do not change the kind of output the original task asks for.
+
+    The clarified task instruction must not be identical to the original task instruction. It should add enough constraint that the target output, rather than a generic or more common output, is obtained.
+
+    Output exactly one line:
+    Clarification: clarified task instruction
+  user: |-
+    Original Task Instruction:
+    {task_instruction}
+
+    Input:
+    {instance_input}
+
+    Target Output:
+    {target_answer}
+
+    Clarification:
+
+reanswer:
+  system: |-
+    Execute the fully clarified instruction on the provided input. Return only the final answer, with no explanation, reasoning, label, or Markdown formatting. Preserve any requested ordering and output format.
+  user: |-
+    Clarified instruction:
+    {resolved_instruction}
+
+    Input:
+    {instance_input}
+
+    Final output:
+
+grouping:
+  system: |-
+    You are a semantic clustering engine.
+  user: |-
+    Task:
+    Cluster the candidate outputs by their semantic meaning for the given task instruction and input.
+
+    First, silently identify a few semantic tags for each candidate output.
+    Then cluster candidate outputs that represent the same complete final output.
+
+    Rules:
+    - Do not execute the task or judge whether any candidate is correct.
+    - Every candidate index must appear in exactly one cluster; do not add outputs.
+    - Group outputs only when they express the same complete task result.
+    - Preserve values, identities, and task-relevant multiplicity. Ordered outputs must also match in order; unordered outputs must contain the same members. Ignore formatting differences only when formatting is not part of the requested result.
+    - If equivalence is unclear, keep the outputs separate.
+
+    Return JSON ONLY.
+    {
+      "clusters": [
+        {
+          "cluster_id": 0,
+          "member_indices": [0, 2],
+          "cluster_tags": ["short tag"]
+        }
+      ]
+    }
+
+    Task Instruction:
+    {task_instruction}
+
+    Input:
+    {instance_input}
+
+    Candidate Outputs:
+    {numbered_answers}
+
+consistency_judge:
+  system: |-
+    You are an expert semantic equivalence judge. Do not execute the task.
+  user: |-
+    Task Instruction:
+    {task_instruction}
+
+    Input:
+    {instance_input}
+
+    Answer A:
+    {answer_a}
+
+    Answer B:
+    {answer_b}
+
+    Do Answer A and Answer B represent the same complete final output for this task?
+
+    Return true only if they express the same complete task result.
+    Preserve values, identities, and task-relevant multiplicity. Ordered outputs must also match in order; unordered outputs must contain the same members. Ignore formatting differences only when formatting is not part of the requested result.
+    Do not judge correctness. Return false if the outputs differ, are only partially equivalent, or equivalence is unclear.
+
+    Respond as JSON:
+    {"score": true or false, "reason": "one sentence"}
+
+reference_matching:
+  system: |-
+    You are an answer-equivalence judge. Do not execute the task yourself.
+  user: |-
+    Task Instruction:
+    {task_instruction}
+
+    Input:
+    {instance_input}
+
+    Canonical answer groups:
+    {canonical_groups_json}
+
+    Predicted semantic cluster:
+    {target_prediction_json}
+
+    The strings in the predicted cluster have already been grouped as one answer.
+    Decide whether that answer is equivalent to exactly one canonical group.
+    Treat the canonical groups as authoritative. Return NONE if it matches no group, could match more than one group, contradicts a group, or is unclear.
+
+    Return JSON only, with `group_id` set to one supplied group ID or `NONE`:
+    {"group_id": "G1", "reason": "one concise sentence"}

@@ -1,0 +1,132 @@
+enumeration:
+  user: |-
+    The request might be ambiguous. These ambiguities can arise from various factors, including but not limited to:
+
+    1. Ambiguous references to entities in the request.
+    2. Multiple properties of objects or entities leading to different interpretations.
+    3. Unclear timestamps or time conventions.
+    4. Unclear locations or spatial scope.
+    5. Multiple valid answer types based on the request.
+
+    The task is to write SQLite queries based on the provided request. The request can be ambiguous and admit different reasonable interpretations. Write all SQL queries corresponding to the reasonable interpretations you can identify, and separate each SQL query with an empty line.
+
+    Do not include explanations, labels, Markdown fences, or duplicate/formatting variants. Do not select extra columns beyond those requested. Each query must be a single read-only SELECT or WITH statement.
+
+    Given the following SQLite database schema and content:
+
+    DATABASE_DUMP
+
+    Answer the following unresolved request:
+    UNRESOLVED_REQUEST
+
+    Return only the SQL queries, separated by empty lines.
+
+clarification:
+  system: |-
+    You rewrite ambiguous database requests into unambiguous requests.
+
+    Given an original request and a target query, write one clarification that expresses the query's interpretation as a reasonable reading and rules out the other reasonable readings.
+
+    Do not explain or mention SQL, schema names, or result values. Do not change what kind of output the original request asks for.
+
+    The clarification must not be identical to the original or merely cosmetic.
+    Never output REJECT.
+
+    Output exactly one line:
+    Clarification: clarified request
+  user: |-
+    SQLite database context:
+
+    DATABASE_DUMP
+
+    Original request:
+    UNRESOLVED_REQUEST
+
+    Target query:
+    REPRESENTATIVE_SQL
+
+    Clarification:
+
+reanswer:
+  user: |-
+    The task is to write exactly one SQLite query for the resolved request below. The request has already been disambiguated. Do not include explanations, Markdown fences, or alternative queries, and do not select extra columns beyond those requested.
+
+    Given the following SQLite database schema and content:
+
+    DATABASE_DUMP
+
+    Resolved request:
+    RESOLVED_REQUEST
+
+    Return exactly one SQL query.
+
+grouping:
+  user: |-
+    Partition the SQL outputs by the reasonable interpretation of the input request that they answer.
+
+    Compare meaning, not table shape. Merge outputs with the same requested entities, filters, scope, grouping or aggregation, time convention, alternatives, and facts even when one adds ancillary columns, reorders columns, changes SQL form, or uses a lossless vertical/horizontal layout.
+
+    Critical contrast: if an ambiguous phrase has plausible facts A and B, keep A-only, B-only, and A+B as separate interpretations. An added field is ancillary only when it is context; it is not ancillary when it realizes another live reading. Sharing a column or having a lossless projection is therefore evidence, not the decision.
+
+    Use the input, schema, SQL, and complete typed results together. Assign each output to exactly one cluster. If semantic equivalence remains uncertain, keep the outputs separate.
+
+    Return only JSON:
+    {"clusters":[{"members":["id1","id2"],"interpretation":"short natural-language description"}]}
+
+    Input request:
+    {{INPUT_REQUEST}}
+
+    Database schema:
+    {{DATABASE_SCHEMA}}
+
+    SQL and results:
+    {{SQL_RESULTS}}
+
+consistency_judge:
+  user: |-
+    Judge whether re-answering the resolved request preserves the source answer on this fixed database.
+
+    The source SQL and result are authoritative; never correct or replace them. Use the resolved request, schema, SQL, complete typed results, and deterministic relation checks. Treat the relation checks as evidence, not as the final semantic decision.
+
+    Return equivalent only when every requested source fact is preserved. Allow ancillary-column differences and lossless reshaping or derivation. Return not_equivalent if any requested source fact, row, entity, filter, scope, grouping or aggregation, time convention, or live alternative is missing, replaced, or changed. Do not accept accidental result equality when the SQL meanings differ. Return uncertain only when the evidence is insufficient.
+
+    Return only JSON:
+    {"decision":"equivalent|not_equivalent|uncertain","reason":"short reason"}
+
+    Resolved input request:
+    {{RESOLVED_REQUEST}}
+
+    Database schema:
+    {{DATABASE_SCHEMA}}
+
+    Deterministic relation checks:
+    {{DETERMINISTIC_RELATION_CHECK}}
+
+    Source SQL and result:
+    {{SOURCE_SQL_RESULT}}
+
+    Stable top-mass recovery SQL and results:
+    {{STABLE_RECOVERY_SQL_RESULTS}}
+
+reference_matching:
+  user: |-
+    Judge whether one predicted SQL answer group is equivalent to exactly one reference answer group. Do not answer the request or write SQL.
+
+    The predicted group has already been semantically grouped and should be judged as one answer. Use the request, schema, SQL, and complete typed results. Compare meaning, not SQL syntax or table shape. Allow ancillary columns, column reordering, and lossless reshaping only when the requested entities, filters, scope, grouping or aggregation, time convention, alternatives, and facts are preserved. Do not accept accidental result equality when the SQL meanings differ.
+
+    Treat the reference groups as authoritative. Return NONE if the prediction matches no group, could match more than one group, changes a requested fact or interpretation, or is unclear.
+
+    Return only JSON, with group_id set to one supplied group ID or NONE:
+    {"group_id":"G1","reason":"one concise sentence"}
+
+    Input request:
+    {{INPUT_REQUEST}}
+
+    Database schema:
+    {{DATABASE_SCHEMA}}
+
+    Reference answer groups:
+    {{REFERENCE_GROUPS_JSON}}
+
+    Predicted answer group:
+    {{PREDICTED_GROUP_JSON}}

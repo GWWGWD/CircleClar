@@ -1,0 +1,64 @@
+[
+  {
+    "task_instruction": "Classify a movie based on its rating.",
+    "input": "The movie \"Mad Max: Fury Road\" has a MPAA rating of R, an IMDb rating of 8.1, and a Rotten Tomatoes rating of 97%.\nPlease note that interpretation 4 remains unspecified, and without a specific rating system to refer to, it is not possible to provide an Output 4. Each task should define the rating system for interpretation 4 if it is to be included.",
+    "answers": [
+      "R",
+      "Excellent",
+      "Outstanding",
+      "Adults"
+    ]
+  },
+  {
+    "task_instruction": "Count the number of objects in the given list of objects.",
+    "input": "6 notebooks, 3 notebooks, 2 markers, 2 markers, 2 markers",
+    "answers": [
+      "15",
+      "2"
+    ]
+  },
+  {
+    "task_instruction": "Determine the square root of a number.",
+    "input": "0.0625",
+    "answers": [
+      "0.25",
+      "-0.25",
+      "0.25 and -0.25"
+    ]
+  },
+  {
+    "task_instruction": "Find the middle value in a list of numbers.",
+    "input": "20, 10",
+    "answers": [
+      "15",
+      "10"
+    ]
+  },
+  {
+    "task_instruction": "Rank the football players based on their performance.",
+    "input": "Season totals for attacking players:\nName, Goals Scored, Assists\nSadio Mané, 18, 8\nThomas Müller, 10, 15\nRaheem Sterling, 14, 9\nBruno Fernandes, 12, 11\nErling Haaland, 25, 6",
+    "answers": [
+      "Erling Haaland, Sadio Mané, Raheem Sterling, Bruno Fernandes, Thomas Müller",
+      "Thomas Müller, Bruno Fernandes, Raheem Sterling, Sadio Mané, Erling Haaland"
+    ]
+  },
+  {
+    "task_instruction": "Rearrange the objects on the table in ascending order.",
+    "input": "The following table lists the objects on my table:\nName, size, weight, color, date of manufacture, price\nCup, 8cm, 0.15kg, orange, 10/10/2020, $2.50\nScissors, 18cm, 0.085kg, red, 02/02/2019, $4.00\nFlash drive, 5cm, 0.02kg, black, 08/25/2021, $12.00\nEnvelope, 24cm, 0.008kg, white, 01/01/2022, $0.25\nThese examples demonstrate ambiguity in the task and show how different attributes can lead to different arrangements of the same set of objects.",
+    "answers": [
+      "Flash drive, Cup, Scissors, Envelope",
+      "Envelope, Flash drive, Scissors, Cup",
+      "Flash drive, Scissors, Cup, Envelope",
+      "Scissors, Cup, Flash drive, Envelope",
+      "Envelope, Cup, Scissors, Flash drive"
+    ]
+  },
+  {
+    "task_instruction": "Sort the data in alphabetical order.",
+    "input": "Computer, Keyboard, Monitor, Mouse",
+    "answers": [
+      "Computer, Keyboard, Monitor, Mouse",
+      "Mouse, Monitor, Keyboard, Computer"
+    ]
+  }
+]

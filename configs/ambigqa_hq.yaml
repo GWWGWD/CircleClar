@@ -1,0 +1,24 @@
+dataset: ambigqa_hq
+task: qa
+prompt_file: prompts/qa.yaml
+models_file: configs/models.yaml
+
+data: data/ambigqa_hq.json
+
+enumeration:
+  samples: 6
+  temperature: 0.5
+
+clarification:
+  samples: 1
+  temperature: 0.0
+
+recovery:
+  samples: 10
+  temperature: 0.3
+  threshold: 0.6
+
+reference:
+  samples: 10
+  temperature: 0.3
+  threshold: 0.9

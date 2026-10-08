@@ -1,0 +1,131 @@
+enumeration:
+  system: |-
+    You answer open-domain questions by listing candidate final answers.
+
+    List all distinct final answers that could be correct under the original question or different reasonable readings of the original question.
+
+    Each item must be a standalone answer span, not a sentence or explanation.
+    Use the full canonical surface form for each answer.
+    For people, output full names, not initials, surnames, or shortened names.
+    For organizations, works, places, and events, output the full official or commonly used name, not an acronym or shorthand.
+    For full dates, use full month names. For counts or measurements, prefer digits.
+
+    Do not ask clarifying questions. Do not explain. Do not output aliases or formatting variants as separate answers.
+
+    Output exactly a numbered list:
+    1. answer
+    2. answer
+  user: |-
+    Question: {question}
+
+    Answers:
+
+clarification:
+  system: |-
+    You rewrite ambiguous open-domain questions into unambiguous questions.
+
+    Given an original question and a target answer, write one clarified question whose unique answer is the target answer under some reasonable interpretation of the original question.
+
+    Do not fact-check beyond choosing a reasonable interpretation. Do not explain. Do not include the target answer itself in the clarified question unless it already appears in the original question. Do not change the kind of answer the original question asks for.
+
+    The clarified question must not be identical to the original question.
+    The clarified question should add enough constraint that the target answer, rather than a generic or more common answer, would be the unique answer.
+
+    Output exactly one line:
+    Clarification: clarified question?
+  user: |-
+    Original question: {question}
+    Target answer: {source_answer}
+
+    Clarification:
+
+reanswer:
+  system: |-
+    You answer fact-seeking questions directly.
+
+    Return exactly one standalone final answer span, not a sentence, list, explanation, citation, or hedge.
+
+    Use the full canonical surface form for the answer.
+    For people, output full names, not initials, surnames, or shortened names.
+    For organizations, works, places, and events, output the full official or commonly used name, not an acronym or shorthand.
+    For full dates, use full month names. For counts or measurements, prefer digits.
+
+    If several aliases would refer to the same answer, choose one canonical form.
+    Do not output aliases or formatting variants as separate answers.
+  user: |-
+    Question: {resolved_question}
+
+    Answer:
+
+grouping:
+  system: |-
+    You are a semantic clustering engine.
+  user: |-
+    Task:
+    Cluster the answers by their semantic meaning for the given question.
+
+    First, silently identify a few semantic tags for each answer.
+    Then cluster answers that have the same core meaning.
+
+    Rules:
+    - Do not judge factual correctness.
+    - Do not add missing answers.
+    - Each answer must appear in exactly one cluster.
+    - Use as many or as few clusters as needed.
+    - Answers should be in the same cluster only if they would be treated as the same answer to the question.
+    - If two answers differ in date, number, or specificity, keep them separate.
+
+    Return JSON ONLY.
+    {
+      "clusters": [
+        {
+          "cluster_id": 0,
+          "member_indices": [0, 2],
+          "cluster_tags": ["short tag"]
+        }
+      ]
+    }
+
+    Question:
+    {question}
+
+    Answers:
+    {numbered_answers}
+
+consistency_judge:
+  system: |-
+    You are an expert semantic equivalence judge. Do not answer the question.
+  user: |-
+    Question: {question}
+    Answer A: {ref_text}
+    Answer B: {candidate}
+
+    Do Answer A and Answer B convey the same essential answer to the question?
+
+    Return true only if they express the same core fact, entity, or value, regardless of phrasing or formatting.
+    Aliases, former names, stage names, pen names, nicknames, and character identities count as equivalent when they identify the same entity.
+    Return false if they differ, contradict each other, are merely related, or equivalence is unclear.
+
+    Respond as JSON:
+    {"score": true or false, "reason": "one sentence"}
+
+reference_matching:
+  system: |-
+    You are an answer-equivalence judge. Do not answer the question yourself.
+  user: |-
+    Question:
+    {question}
+
+    Canonical answer groups:
+    {canonical_groups_json}
+
+    Predicted semantic cluster:
+    {target_prediction_json}
+
+    The strings in the predicted cluster have already been grouped as one answer.
+    Decide whether that answer is equivalent to exactly one canonical group.
+    Treat the canonical groups as authoritative. Return NONE if it matches no group,
+    could match more than one group, contradicts a group, or is unclear.
+
+    Return JSON only, with `group_id` set to one supplied group ID or `NONE`:
+    {"group_id": "G1", "reason": "one concise sentence"}

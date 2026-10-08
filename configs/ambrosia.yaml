@@ -1,0 +1,25 @@
+dataset: ambrosia
+task: sql
+prompt_file: prompts/sql.yaml
+models_file: configs/models.yaml
+
+data: data/ambrosia.json
+database_root: data/ambrosia/databases
+
+enumeration:
+  samples: 5
+  temperature: 1.0
+
+clarification:
+  samples: 1
+  temperature: 0.0
+
+recovery:
+  samples: 5
+  temperature: 0.2
+  threshold: 0.6
+
+reference:
+  samples: 5
+  temperature: 0.2
+  threshold: 0.8

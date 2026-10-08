@@ -1,0 +1,25 @@
+dataset: ambiginst
+task: ambiginst
+prompt_file: prompts/ambiginst.yaml
+models_file: configs/models.yaml
+
+data: data/ambiginst.json
+
+enumeration:
+  samples: 5
+  temperature: 1.0
+  demonstrations: prompts/ambiginst_7shot.json
+
+clarification:
+  samples: 1
+  temperature: 0.0
+
+recovery:
+  samples: 10
+  temperature: 0.3
+  threshold: 0.6
+
+reference:
+  samples: 5
+  temperature: 0.2
+  threshold: 0.8
