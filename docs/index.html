@@ -21,18 +21,18 @@
   <meta name="citation_author" content="Stephan Günnemann">
   <meta name="citation_pdf_url" content="https://gwwgwd.github.io/CircleClar/assets/paper/circleclar.pdf">
   <link rel="preload" href="assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/site.css?v=d1393b6e5deb">
+  <link rel="stylesheet" href="assets/site.css?v=interactive7">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ScholarlyArticle", "name": "What Is a Clarification? Estimating Model-Dependent Input Ambiguity", "url": "https://gwwgwd.github.io/CircleClar/", "author": [{"@type": "Person", "name": "Jingqin Tang"}, {"@type": "Person", "name": "Tim Tomov"}, {"@type": "Person", "name": "Sebastian Schmidt"}, {"@type": "Person", "name": "Dominik Fuchsgruber"}, {"@type": "Person", "name": "Stephan Günnemann"}], "about": ["Input ambiguity", "Clarification", "Language models"]}</script>
-  <script src="assets/site.js" defer></script>
+  <script src="assets/site.js?v=interactive7" defer></script>
 </head>
 <body id="top">
-  <a class="skip-link" href="#overview">Skip to content</a>
+  <a class="skip-link" href="#abstract">Skip to content</a>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="CircleClar — top of page"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span>CircleClar</span></a>
       <nav class="site-nav" aria-label="Page sections">
-        <a href="#overview" aria-current="location">Overview</a>
-        <a href="#abstract">Abstract</a>
+        <a href="#abstract" aria-current="location">Abstract</a>
+        <a href="#overview">Overview</a>
         <a href="#results">Results</a>
         <a href="#bibtex">BibTeX</a>
       </nav>
@@ -42,8 +42,9 @@
     <section class="paper-header" aria-labelledby="paper-title">
       <h1 id="paper-title">What Is a Clarification<span class="title-question">?</span></h1>
       <p class="paper-subtitle">Estimating Model-Dependent Input Ambiguity</p>
-      <p class="authors"><span>Jingqin Tang</span><span>Tim Tomov</span><span>Sebastian Schmidt</span><span>Dominik Fuchsgruber</span><span>Stephan Günnemann</span></p>
-      <p class="affiliation">Technical University of Munich</p>
+      <p class="authors"><span>Jingqin Tang<sup>*1,2</sup></span><span>Tim Tomov<sup>*1,2,3</sup></span><span>Sebastian Schmidt<sup>1,2</sup></span><span>Dominik Fuchsgruber<sup>1,2</sup></span><span>Stephan Günnemann<sup>1,2,3</sup></span></p>
+      <p class="affiliation"><span><sup>1</sup>School of Computation, Information &amp; Technology, Technical University of Munich</span><span><sup>2</sup>Munich Data Science Institute</span><span><sup>3</sup>Munich Center for Machine Learning</span></p>
+      <p class="equal-contribution"><sup>*</sup>Equal contribution</p>
       <p class="venue">LP4FM Workshop @ NeurIPS 2026</p>
       <div class="resource-links">
         <a class="button button-primary" href="assets/paper/circleclar.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Paper<span class="visually-hidden"> (PDF, opens in a new tab)</span></a>
@@ -51,47 +52,172 @@
         <a class="button" href="#bibtex"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> BibTeX</a>
       </div>
     </section>
-    <section id="overview" class="overview-section container" aria-label="Overview">
-      <p class="overview-lead">Ambiguity is usually treated as a property of the input. We study the ambiguity a model actually faces, given what it knows.</p>
-      <figure class="overview-figure">
-        <a class="figure-link" href="assets/images/overview.png" data-figure data-title="World ambiguity, clarifications, and CircleClar" data-original="assets/images/overview.pdf" aria-haspopup="dialog">
-      <img src="assets/images/overview.png" width="3600" height="1040" alt="Three panels distinguish world ambiguity from model ambiguity, show the correspondence between valid answers and clarification classes, and illustrate how CircleClar filters candidates using answer–clarification–answer recovery." decoding="async">
-      <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
-    </a>
-      </figure>
-      <div class="idea-grid">
-        <article class="idea idea-problem">
-          <p class="idea-label">(a) the problem</p>
-          <h3>World ambiguity alone is insufficient</h3>
-          <p>The world answer support is fixed by the input, while the model-realizable support depends on the model’s knowledge.</p>
-        </article>
-        <article class="idea idea-theory">
-          <p class="idea-label">(b) the idea</p>
-          <h3>Valid answers ↔ clarification classes</h3>
-          <p>Each clarification class identifies exactly one valid answer to the original input.</p>
-        </article>
-        <article class="idea idea-method">
-          <p class="idea-label">(c) the method</p>
-          <h3>Answer → clarification → answer</h3>
-          <p>CircleClar estimates the model-realizable support by testing whether candidate answers are recovered through answer–clarification–answer cycles.</p>
-        </article>
-      </div>
-    </section>
     <section id="abstract" class="abstract-section container" aria-labelledby="abstract-title">
       <div class="abstract-grid">
         <h2 id="abstract-title">Abstract</h2>
-        <p class="abstract-copy">Ambiguous inputs can admit multiple interpretations, each potentially yielding a different answer. Existing work largely treats this ambiguity as a property of the input, yet for a particular language model, only some alternatives may be known and answerable. We therefore distinguish world ambiguity, capturing all alternatives admitted by an input, from model ambiguity, capturing those accessible to the responding model. To characterize these alternatives, we formalize natural-language clarifications through three desiderata: <em>uniqueness</em>, <em>faithfulness</em>, and <em>answer equivalence</em>. We show that these desiderata induce a one-to-one correspondence between valid answers and equivalence classes of clarifications, implying that any interpretation can be represented either by its answer or by the clarifications that uniquely express it. We leverage this correspondence to introduce CircleClar, a black-box method that estimates the set of answers available to a model by checking consistency along an answer–clarification–answer cycle. Across open-domain QA and executable Text-to-SQL, CircleClar achieves strong recovery of these answer sets. In QA, the recovered support yields the strongest overall performance in model-dependent ambiguity detection and enables effective selection among answering, clarifying, and abstaining. Together, these results demonstrate the practical value of a model-dependent view of ambiguity and its characterization through an answer-clarification correspondence.</p>
+        <div class="abstract-body">
+          <p class="abstract-tldr"><span class="tldr-label">In short</span>Whether a question is ambiguous depends on the model answering it: a model can only face the interpretations it knows. We use clarifications to find out which interpretations a particular model knows: we define what makes a clarification valid, prove that valid clarifications correspond one-to-one to valid answers, and build CircleClar, a black-box method that keeps an answer only if the model returns to it through an answer → clarification → answer cycle.</p>
+          <details class="abstract-details">
+            <summary><span class="when-closed">Read the full abstract</span><span class="when-open">Hide the full abstract</span></summary>
+            <p class="abstract-copy">Ambiguous inputs can admit multiple interpretations, each potentially yielding a different answer. Existing work largely treats this ambiguity as a property of the input, yet for a particular language model, only some alternatives may be known and answerable. We therefore distinguish world ambiguity, capturing all alternatives admitted by an input, from model ambiguity, capturing those accessible to the responding model. To characterize these alternatives, we formalize natural-language clarifications through three desiderata: <em>uniqueness</em>, <em>faithfulness</em>, and <em>answer equivalence</em>. We show that these desiderata induce a one-to-one correspondence between valid answers and equivalence classes of clarifications, implying that any interpretation can be represented either by its answer or by the clarifications that uniquely express it. We leverage this correspondence to introduce CircleClar, a black-box method that estimates the set of answers available to a model by checking consistency along an answer–clarification–answer cycle. Across open-domain QA and executable Text-to-SQL, CircleClar achieves strong recovery of these answer sets. In QA, the recovered support yields the strongest overall performance in model-dependent ambiguity detection and enables effective selection among answering, clarifying, and abstaining. Together, these results demonstrate the practical value of a model-dependent view of ambiguity and its characterization through an answer-clarification correspondence.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <section id="overview" class="overview-section container" aria-labelledby="overview-title">
+      <div class="overview-heading">
+        <h2 id="overview-title">Overview</h2>
+        <a class="figure-link overview-figure-link" href="assets/images/overview.png" data-figure data-title="Figure 1: World ambiguity, clarifications, and CircleClar" data-original="assets/images/overview.pdf" data-alt="Three panels distinguish world ambiguity from model ambiguity, show the correspondence between valid answers and clarification classes, and illustrate how CircleClar filters candidates using answer–clarification–answer recovery." aria-haspopup="dialog"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> Figure 1 from the paper</a>
+      </div>
+      <p class="overview-lead">Ambiguity is usually treated as a property of the input. We study the ambiguity a model actually faces, given what it knows.</p>
+      <div class="explorer">
+        <div class="explorer-tabs" role="tablist" aria-label="Key ideas">
+          <button class="explorer-tab tab-problem" id="tab-problem" type="button" role="tab" aria-selected="true" aria-controls="panel-problem"><span class="idea-label">(a) the problem</span><span class="tab-title">World ambiguity alone is insufficient</span></button>
+          <button class="explorer-tab tab-theory" id="tab-theory" type="button" role="tab" aria-selected="false" aria-controls="panel-theory" tabindex="-1"><span class="idea-label">(b) the idea</span><span class="tab-title">Valid answers ↔ clarification classes</span></button>
+          <button class="explorer-tab tab-method" id="tab-method" type="button" role="tab" aria-selected="false" aria-controls="panel-method" tabindex="-1"><span class="idea-label">(c) the method</span><span class="tab-title">Answer → clarification → answer</span></button>
+        </div>
+        <section class="explorer-panel panel-problem" id="panel-problem" role="tabpanel" aria-labelledby="tab-problem" tabindex="0">
+          <p class="panel-summary">The world answer support is fixed by the input, while the model-realizable support depends on the model’s knowledge. Switch between models to see how the same question becomes more or less ambiguous.</p>
+          <div class="wm" data-world-model>
+            <div class="demo-controls">
+              <div class="demo-steps" role="group" aria-label="Responding model">
+                <button type="button" data-model="0" aria-pressed="true">Model A</button>
+                <button type="button" data-model="1" aria-pressed="false">Model B</button>
+                <button type="button" data-model="2" aria-pressed="false">Model C</button>
+                <button type="button" data-model="3" aria-pressed="false">Model D</button>
+              </div>
+              <button class="demo-play" type="button" data-play><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg><span>Play</span></button>
+            </div>
+            <p class="demo-question"><span class="demo-x">x</span>“Who voiced the snake in The Jungle Book?”</p>
+            <div class="demo-explain" aria-live="polite">
+              <p class="demo-rule" data-rule></p>
+              <p class="demo-text" data-text></p>
+            </div>
+            <div class="wm-world">
+              <p class="wm-world-label">World answers <i>W</i>(<i>x</i>)</p>
+              <div class="wm-region" data-region aria-hidden="true"><span data-region-label></span></div>
+              <ul class="wm-answers">
+                <li class="wm-answer" data-answer="1" tabindex="0"><span class="bij-y"><i>y</i>₁</span><strong>Sterling Holloway</strong><small>1967 animated film</small><span class="wm-status"></span></li>
+                <li class="wm-answer" data-answer="2" tabindex="0"><span class="bij-y"><i>y</i>₂</span><strong>Scarlett Johansson</strong><small>2016 live-action film</small><span class="wm-status"></span></li>
+                <li class="wm-answer" data-answer="3" tabindex="0"><span class="bij-y"><i>y</i>₃</span><strong>Joseph J. Terry</strong><small>2010 animated series</small><span class="wm-status"></span></li>
+              </ul>
+            </div>
+            <p class="wm-detail" data-detail aria-live="polite"></p>
+            <dl class="wm-metrics">
+              <div><dt>World ambiguity</dt><dd>|<i>W</i>(<i>x</i>)| = 3</dd></div>
+              <div><dt>Model ambiguity</dt><dd data-model-size></dd></div>
+              <div><dt>Appropriate response</dt><dd data-response></dd></div>
+            </dl>
+          </div>
+        </section>
+        <section class="explorer-panel panel-theory" id="panel-theory" role="tabpanel" aria-labelledby="tab-theory" tabindex="0" hidden>
+          <p class="panel-summary">Each clarification class identifies exactly one valid answer to the original input. Switch on the three desiderata one at a time to see which rewrites survive and how the bijection emerges.</p>
+          <div class="bij" data-bijection data-step="0">
+            <div class="demo-controls">
+              <div class="demo-steps" role="group" aria-label="Desiderata">
+                <button type="button" data-step-to="0" aria-pressed="true">Candidates</button>
+                <button type="button" data-step-to="1" aria-pressed="false">D1 Uniqueness</button>
+                <button type="button" data-step-to="2" aria-pressed="false">D2 Faithfulness</button>
+                <button type="button" data-step-to="3" aria-pressed="false">D3 Answer equivalence</button>
+              </div>
+              <button class="demo-play" type="button" data-play><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg><span>Play</span></button>
+            </div>
+            <p class="demo-question"><span class="demo-x">x</span>“Who voiced the snake in The Jungle Book?”</p>
+            <div class="demo-explain" aria-live="polite">
+              <p class="demo-rule" data-rule></p>
+              <p class="demo-text" data-text></p>
+            </div>
+            <div class="bij-stage">
+              <svg class="bij-links" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker id="bij-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8995a5"/></marker>
+                  <marker id="bij-arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#029e73"/></marker>
+                </defs>
+                <g data-links></g>
+              </svg>
+              <div class="bij-pool">
+                <p class="bij-head" data-pool-head>Candidate rewrites of x</p>
+                <ul class="bij-chips" data-pool></ul>
+              </div>
+              <div class="bij-head-row" aria-hidden="true"><span>Clarification classes</span><span>World answers <i>W</i>(<i>x</i>)</span></div>
+              <div class="bij-rows">
+                <div class="bij-row" data-row="1">
+                  <div class="bij-class"><span class="bij-class-label">[<i>c</i><sub><i>y</i>₁</sub>]<sub><i>x</i></sub></span><ul class="bij-chips" data-class="1"></ul></div>
+                  <div class="bij-answer"><span class="bij-y"><i>y</i>₁</span>Sterling Holloway<small>1967 animated film</small></div>
+                </div>
+                <div class="bij-row" data-row="2">
+                  <div class="bij-class"><span class="bij-class-label">[<i>c</i><sub><i>y</i>₂</sub>]<sub><i>x</i></sub></span><ul class="bij-chips" data-class="2"></ul></div>
+                  <div class="bij-answer"><span class="bij-y"><i>y</i>₂</span>Scarlett Johansson<small>2016 live-action film</small></div>
+                </div>
+                <div class="bij-row" data-row="3">
+                  <div class="bij-class"><span class="bij-class-label">[<i>c</i><sub><i>y</i>₃</sub>]<sub><i>x</i></sub></span><ul class="bij-chips" data-class="3"></ul></div>
+                  <div class="bij-answer"><span class="bij-y"><i>y</i>₃</span>Joseph J. Terry<small>2010 animated series</small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="explorer-panel panel-method" id="panel-method" role="tabpanel" aria-labelledby="tab-method" tabindex="0" hidden>
+          <p class="panel-summary">CircleClar estimates the model-realizable support by testing whether candidate answers are recovered through answer–clarification–answer cycles. Step through one run below, then drag the threshold τ.</p>
+          <div class="cc" data-circleclar>
+            <div class="demo-controls">
+              <div class="demo-buttons">
+                <button class="demo-play" type="button" data-play><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg><span>Play</span></button>
+                <button class="demo-play" type="button" data-next>Step <span aria-hidden="true">›</span></button>
+                <button class="demo-play" type="button" data-reset>Reset</button>
+              </div>
+              <label class="cc-tau">Threshold <i>τ</i> = <output data-tau-value>0.6</output><input type="range" min="0.1" max="1" step="0.1" value="0.6" data-tau></label>
+            </div>
+            <p class="demo-question"><span class="demo-x">x</span>“Who voiced the snake in The Jungle Book?”</p>
+            <div class="demo-explain" aria-live="polite">
+              <p class="demo-rule" data-rule></p>
+              <p class="demo-text" data-text></p>
+            </div>
+            <div class="cc-grid">
+              <div class="cc-col">
+                <p class="bij-head">1 · Candidates <i>Ỹ</i>(<i>x</i>)</p>
+                <ol class="cc-samples" data-samples></ol>
+                <ul class="cc-candidates" data-candidates></ul>
+              </div>
+              <div class="cc-col cc-main">
+                <p class="bij-head">2–3 · Answer → clarification → answer</p>
+                <div class="cc-cycle" data-cycle>
+                  <div class="cc-node"><span class="cc-node-label">candidate <i>ỹ</i></span><strong data-candidate>—</strong></div>
+                  <svg class="cc-arcs" viewBox="0 -18 120 156" aria-hidden="true" focusable="false">
+                    <defs><marker id="cc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#007d5a"/></marker></defs>
+                    <path class="cc-arc cc-arc-out" pathLength="1" d="M6 46C30 2 90 2 114 46" marker-end="url(#cc-arrow)"/>
+                    <path class="cc-arc cc-arc-back" pathLength="1" d="M114 74C90 118 30 118 6 74" marker-end="url(#cc-arrow)"/>
+                    <text x="60" y="-6" text-anchor="middle">clarify</text>
+                    <text x="60" y="133" text-anchor="middle">re-answer ×10</text>
+                  </svg>
+                  <div class="cc-node"><span class="cc-node-label">clarification <i>c<sub>ỹ</sub></i></span><q data-clarification>—</q></div>
+                </div>
+                <div class="cc-recovery">
+                  <div class="cc-dots" data-dots></div>
+                  <p class="cc-tally" data-tally></p>
+                  <div class="cc-meter" data-meter><span class="cc-fill" data-fill></span><span class="cc-threshold" data-threshold></span></div>
+                  <p class="cc-verdict" data-verdict></p>
+                </div>
+              </div>
+              <div class="cc-col">
+                <p class="bij-head">4 · Estimate <i>M̂</i>(<i>x</i>)</p>
+                <ul class="cc-estimate" data-estimate></ul>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
     <section id="results" class="results-section" aria-labelledby="results-title">
       <div class="container">
         <h2 id="results-title">Results</h2>
-        <p class="section-intro">Four models on open-domain QA (AmbigQA-HQ, AmbigQA) and Text-to-SQL (AMBROSIA).</p>
+        <p class="section-intro">We evaluate four models (Qwen3-4B, Qwen3-30B-A3B, GPT-5.4-mini, GPT-5.5) on open-domain QA, using 1,000 questions from AmbigQA and AmbigQA-HQ, a manually curated set of 100 questions with more reliable annotations, and on executable Text-to-SQL with 96 requests from AMBROSIA. The reference for each model is its own realizable answer set <i>M</i>(<i>x</i>): the valid answers it reliably reproduces when given their ground-truth clarifications.</p>
         <article class="result-card recovery-card" aria-labelledby="recovery-title">
           <div class="table-heading">
             <h3 id="recovery-title">Recovering model-realizable answers</h3>
             <p class="metric-note">Set F1 ± std. / EM (%) · <span class="result-best">best</span> · <span class="result-second">second-best</span></p>
           </div>
+          <p class="result-measure"><strong>What we measure.</strong> How closely each method recovers the model’s answer set <i>M</i>(<i>x</i>). Per question, set F1 scores the overlap between the predicted and the reference set; exact match (EM) counts questions where both sets are identical. Baselines: ICE with a threshold oracle-tuned per model and dataset, Sampling-50 (50 samples), and 1-Enumeration (asking once for all plausible answers). CircleClar uses a fixed τ = 0.6.</p>
           <p class="table-mobile-hint">Swipe to see all models, or tap the table to enlarge →</p>
           <figure class="recovery-figure">
             <div class="table-scroll" role="region" aria-label="Table 1; scroll horizontally to view all models" tabindex="0">
@@ -125,12 +251,13 @@
           </tbody>
             </table>
           </div>
-          <p class="result-takeaway">CircleClar performs strongly across datasets, achieving particularly large gains over baselines on smaller models and on the curated AmbigQA-HQ benchmark.</p>
+          <p class="result-takeaway">CircleClar performs strongly across datasets, achieving particularly large gains over baselines on smaller models and on the curated AmbigQA-HQ benchmark. Most of the gain comes from precision: the consistency check removes candidates whose cycle does not close, like Neel Sethi in the <a href="#overview" data-open-tab="tab-method">method demo</a>. As models grow, they propose fewer invalid candidates and the gap to simple enumeration narrows.</p>
           <p class="paper-results-link">See <a href="assets/paper/circleclar.pdf" target="_blank" rel="noopener">the paper</a> for experimental setup and consistency-filtering analysis.</p>
         </article>
         <div class="downstream-grid">
           <article class="result-card" aria-labelledby="detection-title">
             <h3 id="detection-title">Detecting model-dependent ambiguity</h3>
+            <p class="result-measure"><strong>What we measure.</strong> Whether a question is ambiguous <em>for this model</em>, i.e. whether it realizes at least two answers, |<i>M</i>(<i>x</i>)| ≥ 2. CircleClar’s score is simply the size of its estimate |<i>M̂</i>(<i>x</i>)|; we compare against ICE, CLARA-D, INTENT-SIM and APA† using AUROC.</p>
             <p class="chart-note">AUROC (%) · 50 is chance · bold: best per row</p>
             <figure class="result-figure">
               <a class="figure-link" href="assets/images/heapmaptable.png" data-figure data-title="Model-dependent ambiguity detection" data-original="assets/images/heapmaptable.pdf" aria-haspopup="dialog">
@@ -138,10 +265,11 @@
       <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
     </a>
             </figure>
-            <p class="result-caption">CircleClar is strongest overall; its clearest gains occur on AmbigQA-HQ.</p>
+            <p class="result-caption">CircleClar is strongest overall; its clearest gains occur on AmbigQA-HQ. Most baselines stay close to chance: they target world ambiguity |<i>W</i>(<i>x</i>)|, which is not what the model faces, as the <a href="#overview" data-open-tab="tab-problem">model switcher</a> illustrates.</p>
           </article>
           <article class="result-card" aria-labelledby="policy-title">
             <h3 id="policy-title">Answer, clarify, or abstain?</h3>
+            <p class="result-measure"><strong>What we measure.</strong> The estimated set directly suggests a response: abstain if it is empty, answer if it holds one answer, clarify if it holds several. We compare this with asking the model for the decision directly, using a generic or a model-dependent prompt, and report balanced accuracy over the three actions.</p>
             <p class="chart-note">Balanced accuracy (%) · error bars: 95% bootstrap CIs · dashed line: constant policy</p>
             <figure class="result-figure">
               <a class="figure-link" href="assets/images/policy.png" data-figure data-title="Answer, clarify, or abstain" data-original="assets/images/policy.pdf" aria-haspopup="dialog">
@@ -149,7 +277,7 @@
       <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
     </a>
             </figure>
-            <p class="result-caption">CircleClar leads in most settings when deciding whether to abstain, clarify, or answer.</p>
+            <p class="result-caption">CircleClar leads in most settings when deciding whether to abstain, clarify, or answer: deriving the action from the recovered set is more reliable than predicting it in one shot. It is the same rule that Models A–D follow in the <a href="#overview" data-open-tab="tab-problem">problem demo</a>.</p>
           </article>
         </div>
       </div>
