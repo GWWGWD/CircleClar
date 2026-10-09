@@ -44,6 +44,7 @@
       <p class="paper-subtitle">Estimating Model-Dependent Input Ambiguity</p>
       <p class="authors"><span>Jingqin Tang</span><span>Tim Tomov</span><span>Sebastian Schmidt</span><span>Dominik Fuchsgruber</span><span>Stephan Günnemann</span></p>
       <p class="affiliation">Technical University of Munich</p>
+      <p class="venue">LP4FM Workshop @ NeurIPS 2026</p>
       <div class="resource-links">
         <a class="button button-primary" href="assets/paper/circleclar.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Paper<span class="visually-hidden"> (PDF, opens in a new tab)</span></a>
         <a class="button" href="https://github.com/GWWGWD/CircleClar" target="_blank" rel="noopener"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Code<span class="visually-hidden"> (opens in a new tab)</span></a>
@@ -51,7 +52,7 @@
       </div>
     </section>
     <section id="overview" class="overview-section container" aria-label="Overview">
-      <p class="overview-lead">An ambiguous question has several valid answers, but a given model knows only some of them. CircleClar estimates which, by checking whether each candidate answer survives an answer → clarification → answer round trip.</p>
+      <p class="overview-lead">Ambiguity is usually treated as a property of the input. We study the ambiguity a model actually faces, given what it knows.</p>
       <figure class="overview-figure">
         <a class="figure-link" href="assets/images/overview.png" data-figure data-title="World ambiguity, clarifications, and CircleClar" data-original="assets/images/overview.pdf" aria-haspopup="dialog">
       <img src="assets/images/overview.png" width="3600" height="1040" alt="Three panels distinguish world ambiguity from model ambiguity, show the correspondence between valid answers and clarification classes, and illustrate how CircleClar filters candidates using answer–clarification–answer recovery." decoding="async">
@@ -61,18 +62,18 @@
       <div class="idea-grid">
         <article class="idea idea-problem">
           <p class="idea-label">(a) the problem</p>
-          <h3>World ≠ model ambiguity</h3>
-          <p>An input determines which answers are valid. The alternatives a model can realize depend on the model.</p>
+          <h3>World ambiguity alone is insufficient</h3>
+          <p>The world answer support is fixed by the input, while the model-realizable support depends on the model’s knowledge.</p>
         </article>
         <article class="idea idea-theory">
           <p class="idea-label">(b) the idea</p>
           <h3>Valid answers ↔ clarification classes</h3>
-          <p>Under uniqueness, faithfulness, and answer equivalence, valid answers and equivalence classes of clarifications correspond one-to-one.</p>
+          <p>Each clarification class identifies exactly one valid answer to the original input.</p>
         </article>
         <article class="idea idea-method">
           <p class="idea-label">(c) the method</p>
-          <h3>Keep the answers that come back</h3>
-          <p>Propose candidates, write a clarification for each, and re-answer. Keep candidates that pass the recovery and frequency checks.</p>
+          <h3>Answer → clarification → answer</h3>
+          <p>CircleClar estimates the model-realizable support by testing whether candidate answers are recovered through answer–clarification–answer cycles.</p>
         </article>
       </div>
     </section>
@@ -86,65 +87,45 @@
       <div class="container">
         <h2 id="results-title">Results</h2>
         <p class="section-intro">Four models on open-domain QA (AmbigQA-HQ, AmbigQA) and Text-to-SQL (AMBROSIA).</p>
-        <article class="result-card" aria-labelledby="recovery-title">
+        <article class="result-card recovery-card" aria-labelledby="recovery-title">
           <div class="table-heading">
             <h3 id="recovery-title">Recovering model-realizable answers</h3>
-            <p class="metric-note">Set F1 (%) · higher is better · bold: best per dataset and model</p>
+            <p class="metric-note">Set F1 ± std. / EM (%) · <span class="result-best">best</span> · <span class="result-second">second-best</span></p>
           </div>
-          <p class="table-mobile-hint">Swipe the table to see all models →</p>
-          <div class="table-scroll" role="region" aria-label="Answer-set recovery results; scroll horizontally on a small screen" tabindex="0">
-            <table class="results-table">
-              <caption class="visually-hidden">Mean per-question set F1 for answer-set recovery on three datasets and four models.</caption>
-              <thead><tr><th scope="col">Dataset</th><th scope="col">Method</th><th scope="col">Qwen3-4B</th><th scope="col">Qwen3-30B-A3B</th><th scope="col">GPT-5.4-mini</th><th scope="col">GPT-5.5</th></tr></thead>
-              <tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA-HQ<span class="dataset-size">100 curated questions</span></th><th scope="row" class="method-label">ICE</th><td>39.23</td><td>52.52</td><td>63.93</td><td><strong>77.91</strong></td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>33.07</td><td>43.63</td><td>55.51</td><td>61.79</td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>23.42</td><td>41.38</td><td>59.40</td><td>68.48</td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>60.02</strong></td><td><strong>64.88</strong></td><td><strong>74.09</strong></td><td>68.85</td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA<span class="dataset-size">1,000 questions</span></th><th scope="row" class="method-label">ICE</th><td>33.71</td><td>41.04</td><td><strong>55.18</strong></td><td><strong>63.93</strong></td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>24.85</td><td>31.66</td><td>39.56</td><td>44.84</td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>14.33</td><td>24.50</td><td>38.28</td><td>46.93</td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>48.28</strong></td><td><strong>46.26</strong></td><td>46.55</td><td>49.32</td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AMBROSIA<span class="dataset-size">96 Text-to-SQL requests</span></th><th scope="row" class="method-label">ICE</th><td><strong>44.44</strong></td><td>36.41</td><td>41.84</td><td>48.02</td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>34.44</td><td>39.50</td><td>36.13</td><td>45.51</td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>38.70</td><td>45.45</td><td>53.26</td><td><strong>51.98</strong></td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td>42.64</td><td><strong>51.39</strong></td><td><strong>56.39</strong></td><td>48.63</td></tr>
-</tbody>
+          <p class="table-mobile-hint">Swipe to see all models, or tap the table to enlarge →</p>
+          <figure class="recovery-figure">
+            <div class="table-scroll" role="region" aria-label="Table 1; scroll horizontally to view all models" tabindex="0">
+              <a class="figure-link paper-table-link" href="assets/images/table1.png" data-figure data-title="Table 1: Model-realizable answer support recovery" data-original="assets/images/table1.pdf" aria-haspopup="dialog">
+                <img src="assets/images/table1.svg" width="391" height="158" alt="Table 1. Mean per-question set F1 with standard deviation and exact set match for ICE, Sampling-50, 1-Enumeration, and CircleClar on AmbigQA-HQ, AmbigQA, and AMBROSIA, across four models. Green and orange mark the best and second-best scores." loading="lazy" decoding="async">
+                <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
+              </a>
+            </div>
+          </figure>
+          <div class="visually-hidden">
+            <table>
+          <caption>Mean per-question set F1 ± standard deviation and exact set match (EM).</caption>
+          <thead><tr><th scope="col">Dataset</th><th scope="col">Method</th><th scope="col">Qwen3-4B</th><th scope="col">Qwen3-30B-A3B</th><th scope="col">GPT-5.4-mini</th><th scope="col">GPT-5.5</th></tr></thead>
+          <tbody>
+          <tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA-HQ</th><th scope="row" class="method-label">ICE</th><td>39.23 ± 46.09<span class="cell-em">EM: 33.00%</span></td><td>52.52 ± 41.97<span class="cell-em">EM: 33.00%</span></td><td>63.93 ± 34.35<span class="cell-em">EM: 31.00%</span></td><td><strong>77.91</strong> ± 29.61<span class="cell-em">EM: 50.00%</span></td></tr>
+          <tr><th scope="row" class="method-label">Sampling-50</th><td>33.07 ± 43.78<span class="cell-em">EM: 25.00%</span></td><td>43.63 ± 40.11<span class="cell-em">EM: 22.00%</span></td><td>55.51 ± 35.23<span class="cell-em">EM: 24.00%</span></td><td>61.79 ± 27.13<span class="cell-em">EM: 21.00%</span></td></tr>
+          <tr><th scope="row" class="method-label">1-Enumeration</th><td>23.42 ± 38.45<span class="cell-em">EM: 15.00%</span></td><td>41.38 ± 36.37<span class="cell-em">EM: 12.00%</span></td><td>59.40 ± 34.74<span class="cell-em">EM: 28.00%</span></td><td>68.48 ± 29.52<span class="cell-em">EM: 35.00%</span></td></tr>
+          <tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>60.02</strong> ± 46.26<span class="cell-em">EM: 52.00%</span></td><td><strong>64.88</strong> ± 40.76<span class="cell-em">EM: 49.00%</span></td><td><strong>74.09</strong> ± 34.78<span class="cell-em">EM: 54.00%</span></td><td>68.85 ± 31.59<span class="cell-em">EM: 35.00%</span></td></tr>
+          </tbody>
+          <tbody>
+          <tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA</th><th scope="row" class="method-label">ICE</th><td>33.71 ± 44.54<span class="cell-em">EM: 26.90%</span></td><td>41.04 ± 42.63<span class="cell-em">EM: 25.50%</span></td><td><strong>55.18</strong> ± 42.50<span class="cell-em">EM: 35.50%</span></td><td><strong>63.93</strong> ± 35.82<span class="cell-em">EM: 31.70%</span></td></tr>
+          <tr><th scope="row" class="method-label">Sampling-50</th><td>24.85 ± 40.58<span class="cell-em">EM: 19.60%</span></td><td>31.66 ± 42.25<span class="cell-em">EM: 22.30%</span></td><td>39.56 ± 40.10<span class="cell-em">EM: 20.60%</span></td><td>44.84 ± 36.69<span class="cell-em">EM: 17.80%</span></td></tr>
+          <tr><th scope="row" class="method-label">1-Enumeration</th><td>14.33 ± 32.46<span class="cell-em">EM: 10.20%</span></td><td>24.50 ± 33.90<span class="cell-em">EM: 7.40%</span></td><td>38.28 ± 36.54<span class="cell-em">EM: 12.30%</span></td><td>46.93 ± 35.57<span class="cell-em">EM: 16.80%</span></td></tr>
+          <tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>48.28</strong> ± 48.53<span class="cell-em">EM: 44.70%</span></td><td><strong>46.26</strong> ± 45.28<span class="cell-em">EM: 35.00%</span></td><td>46.55 ± 41.90<span class="cell-em">EM: 27.60%</span></td><td>49.32 ± 36.49<span class="cell-em">EM: 19.90%</span></td></tr>
+          </tbody>
+          <tbody>
+          <tr><th scope="rowgroup" rowspan="4" class="dataset-label">AMBROSIA</th><th scope="row" class="method-label">ICE</th><td><strong>44.44</strong> ± 37.49<span class="cell-em">EM: 17.71%</span></td><td>36.41 ± 33.73<span class="cell-em">EM: 8.33%</span></td><td>41.84 ± 32.92<span class="cell-em">EM: 8.33%</span></td><td>48.02 ± 29.95<span class="cell-em">EM: 8.33%</span></td></tr>
+          <tr><th scope="row" class="method-label">Sampling-50</th><td>34.44 ± 40.46<span class="cell-em">EM: 17.71%</span></td><td>39.50 ± 36.61<span class="cell-em">EM: 11.46%</span></td><td>36.13 ± 31.34<span class="cell-em">EM: 5.21%</span></td><td>45.51 ± 31.33<span class="cell-em">EM: 7.29%</span></td></tr>
+          <tr><th scope="row" class="method-label">1-Enumeration</th><td>38.70 ± 34.62<span class="cell-em">EM: 11.46%</span></td><td>45.45 ± 36.91<span class="cell-em">EM: 18.75%</span></td><td>53.26 ± 37.99<span class="cell-em">EM: 28.12%</span></td><td><strong>51.98</strong> ± 32.31<span class="cell-em">EM: 11.46%</span></td></tr>
+          <tr class="ours"><th scope="row" class="method-label">CircleClar</th><td>42.64 ± 40.67<span class="cell-em">EM: 21.88%</span></td><td><strong>51.39</strong> ± 39.76<span class="cell-em">EM: 25.00%</span></td><td><strong>56.39</strong> ± 37.84<span class="cell-em">EM: 26.04%</span></td><td>48.63 ± 34.53<span class="cell-em">EM: 12.50%</span></td></tr>
+          </tbody>
             </table>
           </div>
-          <p class="result-takeaway"><strong>Highest set F1 in 7 of 12 settings.</strong> CircleClar exceeds both Sampling-50 and 1-Enumeration in all eight QA settings. The gap is largest for smaller models.</p>
-          <details class="full-results">
-            <summary>Full results with variability and exact match</summary>
-            <p>Mean per-question set F1 ± population standard deviation; exact set match (EM) in percent. Standard deviations describe variability across questions.</p>
-            <div class="table-scroll" role="region" aria-label="Full answer-set recovery results; scroll horizontally" tabindex="0">
-              <table class="results-table">
-                <caption>Set F1 ± standard deviation, with exact set match below each value.</caption>
-                <thead><tr><th scope="col">Dataset</th><th scope="col">Method</th><th scope="col">Qwen3-4B</th><th scope="col">Qwen3-30B-A3B</th><th scope="col">GPT-5.4-mini</th><th scope="col">GPT-5.5</th></tr></thead>
-                <tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA-HQ<span class="dataset-size">100 curated questions</span></th><th scope="row" class="method-label">ICE</th><td>39.23 ± 46.09<span class="cell-em">EM: 33.00%</span></td><td>52.52 ± 41.97<span class="cell-em">EM: 33.00%</span></td><td>63.93 ± 34.35<span class="cell-em">EM: 31.00%</span></td><td><strong>77.91</strong> ± 29.61<span class="cell-em">EM: 50.00%</span></td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>33.07 ± 43.78<span class="cell-em">EM: 25.00%</span></td><td>43.63 ± 40.11<span class="cell-em">EM: 22.00%</span></td><td>55.51 ± 35.23<span class="cell-em">EM: 24.00%</span></td><td>61.79 ± 27.13<span class="cell-em">EM: 21.00%</span></td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>23.42 ± 38.45<span class="cell-em">EM: 15.00%</span></td><td>41.38 ± 36.37<span class="cell-em">EM: 12.00%</span></td><td>59.40 ± 34.74<span class="cell-em">EM: 28.00%</span></td><td>68.48 ± 29.52<span class="cell-em">EM: 35.00%</span></td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>60.02</strong> ± 46.26<span class="cell-em">EM: 52.00%</span></td><td><strong>64.88</strong> ± 40.76<span class="cell-em">EM: 49.00%</span></td><td><strong>74.09</strong> ± 34.78<span class="cell-em">EM: 54.00%</span></td><td>68.85 ± 31.59<span class="cell-em">EM: 35.00%</span></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AmbigQA<span class="dataset-size">1,000 questions</span></th><th scope="row" class="method-label">ICE</th><td>33.71 ± 44.54<span class="cell-em">EM: 26.90%</span></td><td>41.04 ± 42.63<span class="cell-em">EM: 25.50%</span></td><td><strong>55.18</strong> ± 42.50<span class="cell-em">EM: 35.50%</span></td><td><strong>63.93</strong> ± 35.82<span class="cell-em">EM: 31.70%</span></td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>24.85 ± 40.58<span class="cell-em">EM: 19.60%</span></td><td>31.66 ± 42.25<span class="cell-em">EM: 22.30%</span></td><td>39.56 ± 40.10<span class="cell-em">EM: 20.60%</span></td><td>44.84 ± 36.69<span class="cell-em">EM: 17.80%</span></td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>14.33 ± 32.46<span class="cell-em">EM: 10.20%</span></td><td>24.50 ± 33.90<span class="cell-em">EM: 7.40%</span></td><td>38.28 ± 36.54<span class="cell-em">EM: 12.30%</span></td><td>46.93 ± 35.57<span class="cell-em">EM: 16.80%</span></td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td><strong>48.28</strong> ± 48.53<span class="cell-em">EM: 44.70%</span></td><td><strong>46.26</strong> ± 45.28<span class="cell-em">EM: 35.00%</span></td><td>46.55 ± 41.90<span class="cell-em">EM: 27.60%</span></td><td>49.32 ± 36.49<span class="cell-em">EM: 19.90%</span></td></tr>
-</tbody>
-<tbody>
-<tr><th scope="rowgroup" rowspan="4" class="dataset-label">AMBROSIA<span class="dataset-size">96 Text-to-SQL requests</span></th><th scope="row" class="method-label">ICE</th><td><strong>44.44</strong> ± 37.49<span class="cell-em">EM: 17.71%</span></td><td>36.41 ± 33.73<span class="cell-em">EM: 8.33%</span></td><td>41.84 ± 32.92<span class="cell-em">EM: 8.33%</span></td><td>48.02 ± 29.95<span class="cell-em">EM: 8.33%</span></td></tr>
-<tr><th scope="row" class="method-label">Sampling-50</th><td>34.44 ± 40.46<span class="cell-em">EM: 17.71%</span></td><td>39.50 ± 36.61<span class="cell-em">EM: 11.46%</span></td><td>36.13 ± 31.34<span class="cell-em">EM: 5.21%</span></td><td>45.51 ± 31.33<span class="cell-em">EM: 7.29%</span></td></tr>
-<tr><th scope="row" class="method-label">1-Enumeration</th><td>38.70 ± 34.62<span class="cell-em">EM: 11.46%</span></td><td>45.45 ± 36.91<span class="cell-em">EM: 18.75%</span></td><td>53.26 ± 37.99<span class="cell-em">EM: 28.12%</span></td><td><strong>51.98</strong> ± 32.31<span class="cell-em">EM: 11.46%</span></td></tr>
-<tr class="ours"><th scope="row" class="method-label">CircleClar</th><td>42.64 ± 40.67<span class="cell-em">EM: 21.88%</span></td><td><strong>51.39</strong> ± 39.76<span class="cell-em">EM: 25.00%</span></td><td><strong>56.39</strong> ± 37.84<span class="cell-em">EM: 26.04%</span></td><td>48.63 ± 34.53<span class="cell-em">EM: 12.50%</span></td></tr>
-</tbody>
-              </table>
-            </div>
-          </details>
+          <p class="result-takeaway">CircleClar performs strongly across datasets, achieving particularly large gains over baselines on smaller models and on the curated AmbigQA-HQ benchmark.</p>
           <p class="paper-results-link">See <a href="assets/paper/circleclar.pdf" target="_blank" rel="noopener">the paper</a> for experimental setup and consistency-filtering analysis.</p>
         </article>
         <div class="downstream-grid">
@@ -157,7 +138,7 @@
       <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
     </a>
             </figure>
-            <p class="result-caption"><strong>Model-specific ambiguity.</strong> The recovered set size provides an ambiguity score. CircleClar leads in six of eight QA settings; ICE leads on two AmbigQA models.</p>
+            <p class="result-caption">CircleClar is strongest overall; its clearest gains occur on AmbigQA-HQ.</p>
           </article>
           <article class="result-card" aria-labelledby="policy-title">
             <h3 id="policy-title">Answer, clarify, or abstain?</h3>
@@ -168,19 +149,21 @@
       <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
     </a>
             </figure>
-            <p class="result-caption"><strong>From estimates to decisions.</strong> Empty estimated set: abstain. One answer: answer. Several: clarify. This policy leads in most evaluated QA settings.</p>
+            <p class="result-caption">CircleClar leads in most settings when deciding whether to abstain, clarify, or answer.</p>
           </article>
         </div>
       </div>
     </section>
     <section id="bibtex" class="citation-section" aria-labelledby="bibtex-title">
       <div class="container">
-        <h2 id="bibtex-title">BibTeX</h2>
-        <div class="citation-box">
+        <div class="citation-heading">
+          <h2 id="bibtex-title">BibTeX</h2>
           <div class="citation-actions">
             <span id="copy-status" class="copy-status" role="status" aria-live="polite"></span>
-            <button id="copy-bibtex" class="copy-button" type="button"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy BibTeX</button>
+            <button id="copy-bibtex" class="copy-button" type="button"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy<span class="visually-hidden"> BibTeX</span></button>
           </div>
+        </div>
+        <div class="citation-box">
           <pre><code id="bibtex-entry">@misc{tang2026clarification,
   title  = {What Is a Clarification? Estimating Model-Dependent Input Ambiguity},
   author = {Tang, Jingqin and Tomov, Tim and Schmidt, Sebastian and
