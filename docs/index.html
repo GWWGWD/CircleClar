@@ -42,7 +42,7 @@
     <section class="paper-header" aria-labelledby="paper-title">
       <h1 id="paper-title">What Is a Clarification<span class="title-question">?</span></h1>
       <p class="paper-subtitle">Estimating Model-Dependent Input Ambiguity</p>
-      <p class="authors"><span>Jingqin Tang<sup>*1,2</sup></span><span>Tim Tomov<sup>*1,2,3</sup></span><span>Sebastian Schmidt<sup>1,2</sup></span><span>Dominik Fuchsgruber<sup>1,2</sup></span><span>Stephan Günnemann<sup>1,2,3</sup></span></p>
+      <p class="authors"><span>Jingqin Tang<sup>*1</sup></span><span>Tim Tomov<sup>*1,2,3</sup></span><span>Sebastian Schmidt<sup>1</sup></span><span>Dominik Fuchsgruber<sup>1,2</sup></span><span>Stephan Günnemann<sup>1,2,3</sup></span></p>
       <p class="affiliation"><span><sup>1</sup>School of Computation, Information &amp; Technology, Technical University of Munich</span><span><sup>2</sup>Munich Data Science Institute</span><span><sup>3</sup>Munich Center for Machine Learning</span></p>
       <p class="equal-contribution"><sup>*</sup>Equal contribution</p>
       <p class="venue">LP4FM Workshop @ NeurIPS 2026</p>
@@ -269,11 +269,11 @@
           </article>
           <article class="result-card" aria-labelledby="policy-title">
             <h3 id="policy-title">Answer, clarify, or abstain?</h3>
-            <p class="result-measure"><strong>What we measure.</strong> The estimated set directly suggests a response: abstain if it is empty, answer if it holds one answer, clarify if it holds several. We compare this with asking the model for the decision directly, using a generic or a model-dependent prompt, and report balanced accuracy over the three actions.</p>
+            <p class="result-measure"><strong>What we measure.</strong> The estimated set directly suggests a response: abstain if it is empty, answer if it holds one answer, clarify if it holds several. We report balanced accuracy over the three actions, comparing CircleClar with direct generic and model-dependent decision prompts and BAG, which bases its decision on previously sampled responses.</p>
             <p class="chart-note">Balanced accuracy (%) · error bars: 95% bootstrap CIs · dashed line: constant policy</p>
             <figure class="result-figure">
-              <a class="figure-link" href="assets/images/policy.png" data-figure data-title="Answer, clarify, or abstain" data-original="assets/images/policy.pdf" aria-haspopup="dialog">
-      <img src="assets/images/policy.png" width="1800" height="1408" alt="Balanced accuracy of three-way response selection for four models on two QA datasets. CircleClar is compared with direct model-dependent and generic decision prompts, with 95% bootstrap confidence intervals and a constant-policy baseline." loading="lazy" decoding="async">
+              <a class="figure-link" href="assets/images/policy.png?v=1f6ac23dda50" data-figure data-title="Answer, clarify, or abstain" data-original="assets/images/policy.pdf?v=bb6008a8385b" aria-haspopup="dialog">
+      <img src="assets/images/policy.png?v=1f6ac23dda50" width="1800" height="1389" alt="Balanced accuracy of three-way response selection for four models on two QA datasets. CircleClar is compared with BAG and direct model-dependent and generic decision prompts, with 95% bootstrap confidence intervals and a constant-policy baseline." loading="lazy" decoding="async">
       <span class="figure-hint"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> View full size</span>
     </a>
             </figure>
